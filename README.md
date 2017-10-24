@@ -192,13 +192,38 @@ That's more like it! We can edit the files like normal, and refresh it like norm
 ---
 ### Step 6 - Pushing to your repo<a name="s6"></a>
 
+```bash
+#See what's changed
+git status
+#Add all new files
+git add *
+#Commit changes
+git commit -m "finished sam's tutorial"
+#Push to github
+git push origin
+```
+
 ---
 ### Step 7 - Enabling github pages<a name="s7"></a>
+On the repo page on github, go into the repository setting and scroll down to the 'Pages' section
+![](img/i7.png)
+
+Enable pages on your master branch.
+Save, and this page should now display something like:
+
+
+>_Your site is ready to be published at_ https://dooglz.github.io/year1_game/
+
+Github is now serving your repo files as webserver. You can go to the link provided and see your game, live! on the _internet_! Send the link to your friends and family! This will ofcourse only update when you push code to the repo.
+
+
 
 ---
 ### Step 8 - Add collaborators<a name="s8"></a>
 
+In your repo setting on github, find the collaborators section. Here you can allow other github users access to read and write to your repo. Now you can work in teams! Jolly Cooperation!
 
+![](https://i.imgur.com/bBr4udH.jpg)
 
 
 
