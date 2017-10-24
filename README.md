@@ -90,9 +90,104 @@ All websites start with html, so let's get to writing some
 </body>
 </html>
 ```
+This is as bare-bones as we can get away with HTML, most of the above is standard boilerplate, but there are two lines that do interest us.
+```html
+<script type="text/javascript" src="js/phaser.min.js"></script>
+```
+This line loads in the phaser library that we downloaded earlier.
+
+```html
+<script type="text/javascript" src="js/game.js"></script>
+```
+This line loads in the javascript file which we will use for our game code.
+If we tried to open this html page in a web browser we would get an error, as we must create this file first.
+
+**Create a file named "game.js"** in your game/js folder. Add the following code.
+
+```javascript
+var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+
+var score = 0;
+var text;
+
+function preload() {
+}
+
+function create() {
+    var style = { font: "65px Arial", fill: "#ff0044", align: "center" };
+    text = game.add.text(game.world.centerX-300, 0, "", style);
+}
+
+function update() {
+    score++;
+    text.text = "Hello world: " + score;
+}
+```
+
+With this last bit of code added, we should have a functional 'game'.
+Open index.html in a web browser and you should see something like this:
+
+![](img/i4.png)
+
+If you are having any trouble upto this point. the developer console should be your first stop. F12 usually opens this in most web browsers. Have a look there for any errors.
 
 ---
-### Step 5- Running a simple webserver<a name="s5"></a>
+### Step 5 - Running a simple webserver<a name="s5"></a>
+So far we have a very basic 'game' running in javascript, we can view it by opening the index.html file in a web browser. We are able to do this so far because we haven't loaded in any 'art' assets yet. Once we do, we hit an unfortunate snag with web development. "Cross-origin security (CoRs)". Modern browsers won't let your javascript code load things from weird or unsafe locations. Running your game by just opening it in as a file and then trying to load an image from the folder counts as 'weird'. to get around this we have to server our files from a web server.
+
+First of all let's add an image to see this happening. Download this one:
+
+[![](img/bird.png))](img/bird.png)
+
+Save it to **img/bird.png**
+
+Now edit game.js to load this image. Add the following two lines
+```javascript
+function preload() {
+    game.load.image('bird', 'img/bird.png');
+}
+
+function create() {
+//...
+    var image = game.add.sprite(100, 100, 'bird');
+}
+```
+If you refresh your game in a browser, you likely won't see anything. Take a look in the dev console:
+
+![](img/i5.png)
+
+Dang. Cross-origin errors. Chrome won't load that stupid bird.
+
+### Running a webserver.
+The phaser Docs list some good pointers to getting a webserver running.
+
+https://phaser.io/tutorials/getting-started/part2
+
+I would **NOT** recommend installing Apache or WAMP. This would be overkill for what we need. The built in webserver in NodeJS or Python would do us just fine, and if you don't already have they installed on your system, they are super useful environments to have around.
+
+NodeJS
+```bash
+#globally install the node http-server module
+npm install http-server -g
+#then from your game directory run:
+http-server .
+```
+Python 2
+```bash
+python -m SimpleHTTPServer
+```
+Python 3
+```bash
+python3 -m http.server
+```
+
+Running any of the above commands will start a webserver, serving file out of your game directory.
+
+Navigate your browser to the address shown in the console window. i.e __http://127.0.0.1:8000__.
+
+![](img/i6.png)
+
+That's more like it! We can edit the files like normal, and refresh it like normal in the browser. The only difference here is the browser is now satisfied all the data is commIng from a sane source, it trusts the webserver.
 
 ---
 ### Step 6 - Pushing to your repo<a name="s6"></a>
